@@ -1,4 +1,5 @@
 const { validationResult} = require('express-validator');
+const { emit } = require('../../config/server');
 module.exports.iniciaChat = function(application, req, resp){
 
     const errors = validationResult(req);
@@ -6,5 +7,11 @@ module.exports.iniciaChat = function(application, req, resp){
         resp.render('index',{validacao: errors.errors});
         return;
     }
-    resp.render("chat");
+    var dados = req.body;
+    application.get('io')
+        .emit('msgParaCliente',{
+            apelido: dados.apelido,
+            mensagem: ' acabou de entrar no chat.'
+        });
+    resp.render("chat",{dadosForm: dados});
 }
