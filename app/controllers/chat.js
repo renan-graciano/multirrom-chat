@@ -1,5 +1,4 @@
 const { validationResult} = require('express-validator');
-const { emit } = require('../../config/server');
 module.exports.iniciaChat = function(application, req, resp){
 
     const errors = validationResult(req);
